@@ -6,6 +6,13 @@ package br.edu.uricer;
  */
 public class Calculo {
     
+    public static final int ABAIXO_DO_PESO = 0;
+    public static final int PESO_IDEAL = 0;
+    public static final int ACIMA_DO_PESO = 0;
+    
+    public static final String MASCULINO = "M";
+    public static final String FEMININO = "F";
+    
     private String sexo;
     private double estatura;
     private double peso;
@@ -18,27 +25,39 @@ public class Calculo {
     
     public int calcular(){
         
-        double imcGeral = peso / Math.pow(estatura, 2);
+        double imcGeral = calcularImcGeral();
         
-        if (sexo.equals("M")){
-            int imc = 1;
-            if (imcGeral < 20.7)
-                imc = 0;
-            else if (imcGeral > 26.4)
-                imc = 2;
-            
-            return imc;
-        }
-        else{
-            int imc = 1;
-            if (imcGeral < 19.1)
-                imc = 0;
-            else if (imcGeral > 25.8)
-                imc = 2;
-            
-            return imc;
-        }
+        if (sexo.equals(MASCULINO))
+            return calcularImcHomem(imcGeral);
+        else
+            return calcularImcMulher(imcGeral);
+        
         
     }
     
+    private double calcularImcGeral(){
+        return  peso / Math.pow(estatura, 2);
+    }
+    
+    private int calcularImcHomem(double imcGeral){
+        int imc = PESO_IDEAL;
+            
+        if (imcGeral < 20.7)
+            imc = ABAIXO_DO_PESO;
+        else if (imcGeral > 26.4)
+            imc = ACIMA_DO_PESO;
+            
+        return imc;
+    }
+    
+    private int calcularImcMulher(double imcGeral){
+            int imc = PESO_IDEAL;
+            
+            if (imcGeral < 19.1)
+                imc = ABAIXO_DO_PESO;
+            else if (imcGeral > 25.8)
+                imc = ACIMA_DO_PESO;
+            
+            return imc;
+    }
 }
